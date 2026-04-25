@@ -1,0 +1,23 @@
+<h2>Edit Appointment ✏️</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="text" name="name" value="{{ appointment.patient.name }}"><br><br>
+    <input type="number" name="age" value="{{ appointment.patient.age }}"><br><br>
+    <input type="text" name="phone" value="{{ appointment.patient.phone }}"><br><br>
+
+    <select name="doctor">
+        {% for doctor in doctors %}
+            <option value="{{ doctor.id }}"
+                {% if doctor.id == appointment.doctor.id %}selected{% endif %}>
+                {{ doctor.name }} - {{ doctor.specialization }}
+            </option>
+        {% endfor %}
+    </select><br><br>
+
+    <input type="date" name="date" value="{{ appointment.date }}"><br><br>
+    <input type="time" name="time" value="{{ appointment.time }}"><br><br>
+
+    <button type="submit">Update</button>
+</form>

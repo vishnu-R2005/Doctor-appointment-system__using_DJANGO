@@ -45,3 +45,31 @@ def del_appointments(request,id):
     appointment = Appointment.objects.get(id=id)
     appointment.delete()
     return redirect("/")
+
+
+def edit_appointment(request,id):
+    appointment=Appointment.objects.get(id=id)
+    doctors=Doctor.objects.all()
+
+
+    if request.method =="POST":
+        appointment.patient.name=request.POST.get('name')
+        appointment.patient.age=request.POST.get('age')
+        appointment.patient.phone=request.POST.get('phone')
+
+
+        doctor_id=request.POST.get('doctor')
+        appointment.doctor=Doctor.objects.get(id=doctor_id)
+
+
+        appointment.date=request.POST.get('date')
+        appointment.time=request.POST.get('time')
+
+        appointment.patient.save()
+        appointment.save()
+
+        return redirect('/')
+    return render(request,'edit.html',{
+        'appointment': appointment,
+        'doctors':doctors
+    })

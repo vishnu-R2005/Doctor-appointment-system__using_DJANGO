@@ -92,7 +92,7 @@
 <body>
 
 <header>
-    <h1>🏥 Hospital Management System</h1>
+    <h1>Hospital Management System</h1>
     <p>Book appointments easily with top doctors</p>
 </header>
 
@@ -100,7 +100,7 @@
 
     <!-- Doctors List -->
     <div class="card">
-        <h2>👨‍⚕️ Doctors List</h2>
+        <h2>Doctors List</h2>
 
         <table>
             <thead>
@@ -129,7 +129,7 @@
 
     <!-- Appointment Form -->
     <div class="card">
-        <h2>📅 Book Appointment</h2>
+        <h2> Book Appointment</h2>
 
         <form method="POST">
             {% csrf_token %}
@@ -165,13 +165,13 @@
                 </div>
             </div>
 
-            <button type="submit">✅ Book Appointment</button>
+            <button type="submit">Book Appointment</button>
         </form>
     </div>
 
     <!-- Appointments List -->
     <div class="card">
-        <h2>📋 Appointments</h2>
+        <h2>Appointments</h2>
 
         <table>
             <thead>
@@ -191,10 +191,14 @@
                     <td>{{ appointment.date }}</td>
                     <td>{{ appointment.time }}</td>
                     <td>
+                        <a href="{% url 'edit' appointment.id %}">
+                            <button style="background:blue; color:white;">Edit</button>
+                        </a>
                         <a href="{% url 'delete' appointment.id %}">
                             <button style="background:red; color:white;">Delete</button>
                         </a>
                     </td>
+                    
                 </tr>
                 {% empty %}
                 <tr>
