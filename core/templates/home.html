@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +12,19 @@
             padding: 0;
         }
 
-        header {
+        /* NAVBAR */
+        nav {
             background-color: #2b7cff;
             color: white;
-            padding: 20px;
-            text-align: center;
+            padding: 15px;
+        }
+
+        .nav-container {
+            width: 90%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .container {
@@ -71,7 +80,6 @@
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            width: 100%;
         }
 
         button:hover {
@@ -91,10 +99,34 @@
 
 <body>
 
-<header>
-    <h1>Hospital Management System</h1>
-    <p>Book appointments easily with top doctors</p>
-</header>
+<!-- ✅ NAVBAR -->
+<nav>
+    <div class="nav-container">
+
+        <h2 style="margin:0;">🏥 Hospital System</h2>
+
+        <div>
+            {% if user.is_authenticated %}
+                <span style="margin-right:15px;">
+                    Welcome, {{ user.username }}
+                </span>
+
+                <a href="{% url 'logout' %}">
+                    <button style="background:red;">Logout</button>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}">
+                    <button style="margin-right:10px;">Login</button>
+                </a>
+
+                <a href="{% url 'register' %}">
+                    <button style="background:green;">Register</button>
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
 
 <div class="container">
 
@@ -129,7 +161,7 @@
 
     <!-- Appointment Form -->
     <div class="card">
-        <h2> Book Appointment</h2>
+        <h2>Book Appointment</h2>
 
         <form method="POST">
             {% csrf_token %}
@@ -180,6 +212,7 @@
                     <th>Doctor</th>
                     <th>Date</th>
                     <th>Time</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -192,17 +225,17 @@
                     <td>{{ appointment.time }}</td>
                     <td>
                         <a href="{% url 'edit' appointment.id %}">
-                            <button style="background:blue; color:white;">Edit</button>
+                            <button style="background:blue;">Edit</button>
                         </a>
+
                         <a href="{% url 'delete' appointment.id %}">
-                            <button style="background:red; color:white;">Delete</button>
+                            <button style="background:red;">Delete</button>
                         </a>
                     </td>
-                    
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4">No appointments booked</td>
+                    <td colspan="5">No appointments booked</td>
                 </tr>
                 {% endfor %}
             </tbody>
